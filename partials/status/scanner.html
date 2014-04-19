@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Scanners</div>
+	<div class="panel-body">
+		Sorteer op:
+		<select ng-model="scannerSort">
+			<option value="number">Nummer</option>
+			<option value="address">Adres</option>
+			<option value="shutter">Shutter</option>
+			<option value="gobo">Gobo</option>
+			<option value="kleur">colot</option>
+			<option value="pan">Pan</option>
+			<option value="tilt">Tilt</option>
+		</select>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nummer <i class="fa fa-bookmark"></th>
+				<th>Adres <i class="fa fa-cog"></th>
+				<th>Shutter <i class="fa fa-adjust"></i></th>
+				<th>Gobo <i class="fa fa-star"></i></th>
+				<th>Kleur <i class="fa fa-tint"></i></th>
+				<th>Pan <i class="fa fa-arrows-h"></i>
+				</th>
+				<th>Tilt <i class="fa fa-arrows-v"></i></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="scanner in scanners | orderBy: scannerSort">
+				<th>{{scanner.number}}</th>
+				<td>{{scanner.address}}</td>
+				<td>
+					{{scanner.shutterName}}
+					<span class="badge dmx-badge">{{scanner.shutter}}</span>
+					</td>
+				<td>
+					{{scanner.goboName}}
+					<span class="badge dmx-badge">{{scanner.gobo}}</span>
+				</td>
+				<td>
+					<button class="btn btn-default" style="background-color:{{scanner.colorHtml}};">&nbsp;</button>
+					{{scanner.colorName}}
+					<span class="badge dmx-badge">{{scanner.color}}</span>
+				</td>
+				<td>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="{{scanner.pan}}" aria-valuemin="0" aria-valuemax="255" style="width: {{scanner.pan*100/255}}%;">{{scanner.pan}}</div>
+					</div>
+				</td>
+				<td>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="{{scanner.pan}}" aria-valuemin="0" aria-valuemax="255" style="width: {{scanner.tilt*100/255}}%;">{{scanner.tilt}}</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+</table>
+</div>

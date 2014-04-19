@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Led Pars</div>
+	<div class="panel-body">
+		Sorteer op:
+		<select ng-model="ledSort">
+			<option value="number">Nummer</option>
+			<option value="address">Adres</option>
+			<option value="red">Rood</option>
+			<option value="green">Groen</option>
+			<option value="blue">Blauw</option>
+			<option value="4">4</option>
+			<option value="4">5</option>
+			<option value="4">6</option>
+		</select>
+	</div>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nummer <i class="fa fa-bookmark"></th>
+					<th>Adres <i class="fa fa-cog"></th>
+					<th>Kleur <i class="fa fa-tint"></i></th>
+					<th>4</th>
+					<th>5</th>
+					<th>6</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="led in leds | orderBy: ledSort">
+					<th>{{led.number}}</th>
+					<td>{{led.address}}</td>
+					<td> <button class="btn btn-default" style="background-color:rgb({{led.red}},{{led.green}},{{led.blue}})">&nbsp;</button>
+						<span class="badge dmx-badge">{{led.red}}</span><span class="badge dmx-badge">{{led.green}}</span><span class="badge dmx-badge">{{led.blue}}</span>
+					</td>
+					<td>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{led.4}}" aria-valuemin="0" aria-valuemax="255" style="width: {{led.4*100/255}}%;">{{led.4}}</div>
+						</div>
+					</td>
+					<td>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{led.5}}" aria-valuemin="0" aria-valuemax="255" style="width: {{led.5*100/255}}%;">{{led.5}}</div>
+						</div>
+					</td>
+					<td>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{led.6}}" aria-valuemin="0" aria-valuemax="255" style="width: {{led.6*100/255}}%;">{{led.6}}</div>
+						</div>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
