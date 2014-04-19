@@ -3,7 +3,7 @@
 /* Controllers */
 
 var olaCtrls = angular.module('olaApp.controllers', []);
-olaCtrls.controller('StatusCtrl', ['$scope', '$http', function($scope, $http) {
+olaCtrls.controller('StatusCtrl', ['$scope', '$http', 'PATCH', function($scope, $http, PATCH) {
 	
 	$http.get('http://localhost/get_dmx?u=1').success(function(data) {
 		$scope.dmx = data;
@@ -17,36 +17,44 @@ olaCtrls.controller('StatusCtrl', ['$scope', '$http', function($scope, $http) {
 		}
 
 		// create leds
-		for (var i=1; i<=8; i++) {
-			var j = i*10;
+		var amount = PATCH['leds']['amount'];
+		var step = PATCH['leds']['step'];
+		var first = PATCH['leds']['first'];
+		for (var i=0; i<amount; i++) {
+			// substract 1, data array counts from zero, dmx from 1
+			var index = first + i*step -1; 
 			var led = {
-				'number' : i,
-				'address' : j+1,
-				'red' : data['dmx'][j],
-				'green' : data['dmx'][j+1],
-				'blue' : data['dmx'][j+2],
-				'4' : data['dmx'][j+3],
-				'5' : data['dmx'][j+4],
-				'6' : data['dmx'][j+5],
+				'number' : i+1,
+				'address' : index +1,
+				'red' : data['dmx'][index],
+				'green' : data['dmx'][index+1],
+				'blue' : data['dmx'][index+2],
+				'4' : data['dmx'][index+3],
+				'5' : data['dmx'][index+4],
+				'6' : data['dmx'][index+5],
 			};
 			$scope.leds.push(led);
 		}
 
 		// create scanners
-		for (var i=1; i<=4; i++) {
-			var j = 100 + i*10;
+		var amount = PATCH['scanners']['amount'];
+		var step = PATCH['scanners']['step'];
+		var first = PATCH['scanners']['first'];
+		for (var i=0; i<amount; i++) {
+			// substract 1, data array counts from zero, dmx from 1
+			var index = first + i*step -1; 
 			var scanner = {
-				'number' : i,
-				'address' : j+1,
-				'shutter' : data['dmx'][j],
-				'gobo' : data['dmx'][j+1],
-				'color' : data['dmx'][j+2],
-				'pan' : data['dmx'][j+3],
-				'tilt' : data['dmx'][j+4],
-				'shutterName': shutterName(data['dmx'][j]),
-				'goboName' : goboName(data['dmx'][j+1]),
-				'colorName' : colorName(data['dmx'][j+2]),
-				'colorHtml' : colorHtml(data['dmx'][j+2]),
+				'number' : i+1,
+				'address' : index+1,
+				'shutter' : data['dmx'][index],
+				'gobo' : data['dmx'][index+1],
+				'color' : data['dmx'][index+2],
+				'pan' : data['dmx'][index+3],
+				'tilt' : data['dmx'][index+4],
+				'shutterName': shutterName(data['dmx'][index]),
+				'goboName' : goboName(data['dmx'][index+1]),
+				'colorName' : colorName(data['dmx'][index+2]),
+				'colorHtml' : colorHtml(data['dmx'][index+2]),
 			};
 			$scope.scanners.push(scanner);
 		}
