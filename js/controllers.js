@@ -5,7 +5,7 @@
 var olaCtrls = angular.module('olaApp.controllers', []);
 olaCtrls.controller('StatusCtrl', ['$scope', '$http', function($scope, $http) {
 	
-	$http.get('dmx').success(function(data) {
+	$http.get('http://localhost/get_dmx?u=1').success(function(data) {
 		$scope.dmx = data;
 		$scope.leds = new Array();
 		$scope.scanners = new Array();
