@@ -63,6 +63,8 @@ olaCtrls.controller('NavbarCtrl', ['$scope', '$location', function($scope, $loca
 	}
 }]);
 
+olaCtrls.controller('ControlCtrl', ['$scope', '$http', function($scope, $http) {}]);
+
 function shutterName($value) {
 	// from low to high, return when found
 	if ($value <= 10) return "Stop";

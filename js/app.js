@@ -10,5 +10,6 @@ angular.module('olaApp', [
   'olaApp.controllers'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/status', {templateUrl: 'partials/status.html', controller: 'StatusCtrl'});
+  $routeProvider.when('/status', {templateUrl: 'partials/status.html', controller: 'StatusCtrl'})
+  $routeProvider.when('/control', {templateUrl: 'partials/control.html', controller: 'ControlCtrl'});
 }]);
