@@ -1,9 +1,9 @@
+<div class="alert alert-danger alert-dismissable" ng-if="dmxError">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Oeps!</strong> Er liep iets mis met het ophalen van de dmx-data: {{dmxError}}
+		</div>
 <div class="Page Header">
 	
 </div>
 <div ng-include src="'partials/status/led.html'" ></div>
 <div ng-include src="'partials/status/scanner.html'" ></div>
-<!--
-<div ng-include src="'partials/status/strobo.html'" ></div>
-<div ng-include src="'partials/status/laser.html'" ></div>
--->
