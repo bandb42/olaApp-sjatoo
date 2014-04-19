@@ -11,8 +11,11 @@ var olaApp = angular.module('olaApp', [
 ]);
 
 olaApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/status', {templateUrl: 'partials/status.html', controller: 'StatusCtrl'})
+  $routeProvider.when('/status', {templateUrl: 'partials/status.html', controller: 'StatusCtrl'});
   $routeProvider.when('/control', {templateUrl: 'partials/control.html', controller: 'ControlCtrl'});
+  $routeProvider.when('/', {templateUrl: 'partials/index.html'});
+  $routeProvider.when('/help', {templateUrl: 'partials/help.html'});
+
 }]);
 
 olaApp.constant('PATCH', {
