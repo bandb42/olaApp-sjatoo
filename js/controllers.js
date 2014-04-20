@@ -3,65 +3,66 @@
 /* Controllers */
 
 var olaCtrls = angular.module('olaApp.controllers', []);
-olaCtrls.controller('StatusCtrl', ['$scope', '$http', 'PATCH', function($scope, $http, PATCH) {
-	
-	$http.get('http://localhost/get_dmx?u=1').success(function(data) {
-		$scope.dmx = data;
-		$scope.leds = new Array();
-		$scope.scanners = new Array();
-
-		// check for error
-		if (data['error']) {
-			$scope.dmxError = data['error'];
-			return
-		}
-
-		// create leds
-		var amount = PATCH['leds']['amount'];
-		var step = PATCH['leds']['step'];
-		var first = PATCH['leds']['first'];
-		for (var i=0; i<amount; i++) {
-			// substract 1, data array counts from zero, dmx from 1
-			var index = first + i*step -1; 
-			var led = {
-				'number' : i+1,
-				'address' : index +1,
-				'red' : data['dmx'][index],
-				'green' : data['dmx'][index+1],
-				'blue' : data['dmx'][index+2],
-				'4' : data['dmx'][index+3],
-				'5' : data['dmx'][index+4],
-				'6' : data['dmx'][index+5],
-			};
-			$scope.leds.push(led);
-		}
-
-		// create scanners
-		var amount = PATCH['scanners']['amount'];
-		var step = PATCH['scanners']['step'];
-		var first = PATCH['scanners']['first'];
-		for (var i=0; i<amount; i++) {
-			// substract 1, data array counts from zero, dmx from 1
-			var index = first + i*step -1; 
-			var scanner = {
-				'number' : i+1,
-				'address' : index+1,
-				'shutter' : data['dmx'][index],
-				'gobo' : data['dmx'][index+1],
-				'color' : data['dmx'][index+2],
-				'pan' : data['dmx'][index+3],
-				'tilt' : data['dmx'][index+4],
-				'shutterName': shutterName(data['dmx'][index]),
-				'goboName' : goboName(data['dmx'][index+1]),
-				'colorName' : colorName(data['dmx'][index+2]),
-				'colorHtml' : colorHtml(data['dmx'][index+2]),
-			};
-			$scope.scanners.push(scanner);
-		}
-		
-	}) 	
+olaCtrls.controller('StatusCtrl', ['$scope', '$http', '$interval', 'PATCH', function($scope, $http, $interval, PATCH) {
 	$scope.ledSort = 'number';
 	$scope.scannerSort = 'number';
+	var repeat = $interval(function() {
+		$http.get('http://localhost/get_dmx?u=1').success(function(data) {
+			$scope.dmx = data;
+			$scope.leds = new Array();
+			$scope.scanners = new Array();
+
+			// check for error
+			if (data['error']) {
+				$scope.dmxError = data['error'];
+				return
+			}
+
+			// create leds
+			var amount = PATCH['leds']['amount'];
+			var step = PATCH['leds']['step'];
+			var first = PATCH['leds']['first'];
+			for (var i=0; i<amount; i++) {
+				// substract 1, data array counts from zero, dmx from 1
+				var index = first + i*step -1; 
+				var led = {
+					'number' : i+1,
+					'address' : index +1,
+					'red' : data['dmx'][index],
+					'green' : data['dmx'][index+1],
+					'blue' : data['dmx'][index+2],
+					'4' : data['dmx'][index+3],
+					'5' : data['dmx'][index+4],
+					'6' : data['dmx'][index+5],
+				};
+				$scope.leds.push(led);
+			}
+
+			// create scanners
+			var amount = PATCH['scanners']['amount'];
+			var step = PATCH['scanners']['step'];
+			var first = PATCH['scanners']['first'];
+			for (var i=0; i<amount; i++) {
+				// substract 1, data array counts from zero, dmx from 1
+				var index = first + i*step -1; 
+				var scanner = {
+					'number' : i+1,
+					'address' : index+1,
+					'shutter' : data['dmx'][index],
+					'gobo' : data['dmx'][index+1],
+					'color' : data['dmx'][index+2],
+					'pan' : data['dmx'][index+3],
+					'tilt' : data['dmx'][index+4],
+					'shutterName': shutterName(data['dmx'][index]),
+					'goboName' : goboName(data['dmx'][index+1]),
+					'colorName' : colorName(data['dmx'][index+2]),
+					'colorHtml' : colorHtml(data['dmx'][index+2]),
+				};
+				$scope.scanners.push(scanner);
+			}
+			
+		})
+	}, 1000 ); 	
 
 }])
 
